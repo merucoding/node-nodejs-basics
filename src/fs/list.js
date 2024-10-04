@@ -2,12 +2,12 @@ import fs from "fs/promises";
 
 const list = async () => {
   try {
-    await fs.access("./files");
+    await fs.access("src/fs/files");
   } catch {
     throw new Error("FS operation failed: folder Files does not exists");
   }
 
-  const files = await fs.readdir("./files");
+  const files = await fs.readdir("src/fs/files");
   console.log(files);
 };
 
