@@ -1,4 +1,6 @@
 import { Transform } from "stream";
+import { pipeline } from "stream/promises";
+import { stdin, stdout } from "process";
 
 const reverse = new Transform({
   transform(chunk, encoding, callback) {
@@ -7,8 +9,12 @@ const reverse = new Transform({
   },
 });
 
-const transform = () => {
-  process.stdin.pipe(reverse).pipe(process.stdout);
+const transform = async () => {
+  try {
+    await pipeline(stdin, reverse, stdout);
+  } catch (error) {
+    console.error("Failed: ", error);
+  }
 };
 
-transform();
+await transform();
